@@ -6,7 +6,7 @@ const Button = (props) => (
 
 const Statistics = (props) => {
   return (
-  <p>{props.text} {props.value}</p>
+  <div>{props.text} {props.value}</div>
   )
 }
 
@@ -40,6 +40,21 @@ const App = () => {
     setTotal(good + bad + updatedNeutral)
   }
 
+  if (total === 0) {
+    return (
+      <div>
+      <h1>give feedback</h1>
+
+      <Button handleClick={increaseGood} text="good" />
+      <Button handleClick={increaseNeutral} text="neutral" />
+      <Button handleClick={increaseBad} text="bad" />
+
+      <h1>statistics</h1>
+      <div>No feedback given</div>
+    </div>
+    )
+  }
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -49,7 +64,7 @@ const App = () => {
       <Button handleClick={increaseBad} text="bad" />
 
       <h1>statistics</h1>
-
+      
       <Statistics text="good" value={good} />
       <Statistics text="neutral" value={neutral} />
       <Statistics text="bad" value={bad} />
