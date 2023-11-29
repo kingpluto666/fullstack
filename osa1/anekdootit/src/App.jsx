@@ -17,37 +17,41 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
+  
+  const lista = Array(anecdotes.length).fill(0)
+
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(lista);
+
 
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * max)
   }
-  
-  const luku = anecdotes.length
-  const lista = Array(luku).fill(0)
-  const kopioLista = {...lista}
-
 
   const voting = () => {
-    console.log(selected)
-    console.log(lista)
+    const kopioLista = [...votes]
     kopioLista[selected] += 1
+    setVotes(kopioLista)
   }
 
   const clicks = () => {
     const valittu = getRandomInt(8)
-    console.log(valittu)
     setSelected(valittu)
   }
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
+      <div>
+      Has {votes[selected]} Votes
+      </div>
       <div>
       <Button handleClick={clicks} text="next anecdote" />
       <Button handleClick={voting} text="vote" />
       </div>
+      <h1>Anecdote with the most votes</h1>
+      
     </div>
   )
 }
