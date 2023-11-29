@@ -39,6 +39,22 @@ const App = () => {
     setSelected(valittu)
   }
 
+
+  const indexOfMax = (arr) => {
+    
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
+  }
+
   return (
     <div>
       <h1>Anecdote of the day</h1>
@@ -51,7 +67,8 @@ const App = () => {
       <Button handleClick={voting} text="vote" />
       </div>
       <h1>Anecdote with the most votes</h1>
-      
+      {anecdotes[indexOfMax(votes)]}
+      <div>Has {votes[indexOfMax(votes)]} votes</div>
     </div>
   )
 }
