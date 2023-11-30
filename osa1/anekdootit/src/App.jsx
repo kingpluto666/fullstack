@@ -41,19 +41,41 @@ const App = () => {
 
 
   const indexOfMax = (arr) => {
-    
     var max = arr[0];
     var maxIndex = 0;
-
     for (var i = 1; i < arr.length; i++) {
         if (arr[i] > max) {
             maxIndex = i;
             max = arr[i];
         }
     }
-
     return maxIndex;
   }
+
+  let sum = 0;
+
+  for (let i = 0; i < votes.length; i++ ) {
+    sum += votes[i];
+  }
+
+  if (sum == 0) {
+    return (
+      <div>
+        <h1>Anecdote of the day</h1>
+        {anecdotes[selected]}
+        <div>
+        Has {votes[selected]} Votes
+        </div>
+        <div>
+        <Button handleClick={clicks} text="next anecdote" />
+        <Button handleClick={voting} text="vote" />
+        </div>
+        <h1>Anecdote with the most votes</h1>
+        <p>All anecdotes have 0 votes</p>
+      </div>
+    )
+  }
+
 
   return (
     <div>
