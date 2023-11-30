@@ -1,58 +1,66 @@
-const Header = (props) => {
-  console.log(props)
-  return (
-  <h1>{props.course}</h1>
-  )
-}
+const Header = ({course}) => <h1>{course}</h1>
 
-const Part = (props) => {
-  return (
-      <p>{props.part} {props.exercises}</p>
-  )
-}
+const Part = ({part, exercises}) => <p>{part} {exercises}</p>
 
-const Content = (props) => {
+const Content = ({parts}) => {
+  const osat = parts.map(x => x.name)
+
+  const tm = parts.map(x => x.exercises)
+
+  console.log(osat)
   return (
     <div>
-      <Part part ={props.parts[0].name} exercises = {props.parts[0].exercises}/>
-      <Part part ={props.parts[1].name} exercises = {props.parts[1].exercises}/>
-      <Part part ={props.parts[2].name} exercises = {props.parts[2].exercises}/>
+      <Part part ={osat[0]} exercises = {tm[0]}/>
+      <Part part ={osat[1]} exercises = {tm[1]}/>
+      <Part part ={osat[2]} exercises = {tm[2]}/>
     </div>
   )
 }
 
-const Total = (props) => {
+const Total = ({parts}) => {
+  const sum = parts.reduce((sum, kurssi) => sum + kurssi.exercises, 0)
   return (
-      <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
+    <p>Total of {sum} exercises</p>
+  )
+}
+
+const Course = ({ course }) => {
+  return (
+    <div>
+    <Header course={course.name} />
+    <Content parts={course.parts} />
+    <Total parts={course.parts} />
+    </div>
   )
 }
 
 
 const App = () => {
-
   const course = {
     name: 'Half Stack application development',
+    id: 1,
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of a component',
-        exercises: 14
+        exercises: 14,
+        id: 3
       }
     ]
   }
 
   return (
     <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <Course course={course} />
     </div>
   )
 }
