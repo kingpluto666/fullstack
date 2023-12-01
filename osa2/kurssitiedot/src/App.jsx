@@ -3,16 +3,12 @@ const Header = ({course}) => <h1>{course}</h1>
 const Part = ({part, exercises}) => <p>{part} {exercises}</p>
 
 const Content = ({parts}) => {
-  const osat = parts.map(x => x.name)
 
-  const tm = parts.map(x => x.exercises)
+  const osat = parts.map(x => <div key={x.id}> <Part part ={x.name} exercises={x.exercises} /></div>)
 
-  console.log(osat)
   return (
     <div>
-      <Part part ={osat[0]} exercises = {tm[0]}/>
-      <Part part ={osat[1]} exercises = {tm[1]}/>
-      <Part part ={osat[2]} exercises = {tm[2]}/>
+      {osat}
     </div>
   )
 }
