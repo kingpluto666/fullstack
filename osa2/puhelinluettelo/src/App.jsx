@@ -1,6 +1,33 @@
 import { useState } from 'react'
 
-const Persons = ({person}) => <div>{person.name} {person.number} </div>
+const Filter = ({value, func}) => <div> filter shown with <input value={value} onChange={func}/> </div>
+
+const PersonForm = ({subFunc, name, nameFunc, number, numbFunc}) => {
+  return (
+  <form onSubmit={subFunc}>
+        <div>
+        name: <input value={name} onChange={nameFunc}/>
+        </div>
+        <div>
+        number: <input value={number} onChange={numbFunc}/>
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+  </form>
+  )
+}
+
+const Person = ({nimi, numero}) => <div> {nimi} {numero} </div>
+
+const Persons = ({lista, filtteri}) => {
+  return (
+    lista.filter(x => x.name.toLowerCase()
+      .includes(filtteri.toLowerCase()) || filtteri === '')
+      .map(x => <Person key={x.name} nimi={x.name} numero={x.number}/>)
+  )
+}
+
 
 const App = () => {
 
@@ -21,9 +48,8 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    const lista = persons.map((x) => x.name)
 
-    if (lista.includes(newName)) {
+    if (persons.map(x => x.name).includes(newName)) {
       alert(`${newName} is already added to phonebook`)
     }
     else {
@@ -42,28 +68,18 @@ const App = () => {
   }
 
   const handleFilterChange = (event) => {
-    console.log(event.target.value)
     newFilterValue(event.target.value)
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with <input onChange={handleFilterChange}/>
+      <Filter value={newFilter} func={handleFilterChange}/>
       <h2>add a new</h2>
-      <form onSubmit={AddData}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-        number: <input value={newNumber} onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm subFunc={AddData} name={newName} nameFunc={handleNameChange}
+       number={newNumber} numbFunc={handleNumberChange}/>
       <h2>Numbers</h2>
-      {persons.map((person) => (<Persons key={person.name} person={person} number={person.number} />))}
+      <Persons lista={persons} filtteri={newFilter}/>
     </div>
   )
 
